@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -12,10 +14,10 @@ import (
 
 var addr = ":8080"
 
-var app *echo.Echo
+var server *http.Server
 
 func Serve() {
-	app = echo.New()
+	app := echo.New()
 
 	app.Use(middleware.Recover())
 
@@ -32,13 +34,19 @@ func Serve() {
 
 	fmt.Println("Server strating on port", addr)
 
-	if err := app.Start(addr); err != nil {
+	server = &http.Server{
+		Addr:              addr,
+		Handler:           app,
+		ReadHeaderTimeout: 3 * time.Second,
+	}
+
+	if err := server.ListenAndServe(); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
 
 func Shutdown(ctx context.Context) error {
-	err := app.Shutdown(ctx)
+	err := server.Shutdown(ctx)
 
 	if err != nil {
 		return err
