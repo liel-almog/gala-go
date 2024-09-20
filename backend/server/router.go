@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/liel-almog/gala-go/backend/routes"
 )
 
 func setupRouter(app *echo.Echo) {
@@ -13,5 +14,6 @@ func setupRouter(app *echo.Echo) {
 		})
 	})
 
-	// api := app.Group("/api")
+	api := app.Group("/api")
+	routes.NewEventRoute(api)
 }
