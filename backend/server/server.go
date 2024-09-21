@@ -10,6 +10,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/liel-almog/gala-go/backend/configs"
+	"github.com/liel-almog/gala-go/backend/database"
+	"golang.org/x/sync/errgroup"
 )
 
 var addr = ":8080"
@@ -46,9 +48,18 @@ func Serve() {
 }
 
 func Shutdown(ctx context.Context) error {
-	err := server.Shutdown(ctx)
+	var wg errgroup.Group
 
-	if err != nil {
+	wg.Go(func() error {
+		return server.Shutdown(ctx)
+	})
+
+	wg.Go(func() error {
+		return database.GetDB().Close(ctx)
+	})
+
+	// Wait for both operations to finish and return any error that occurred
+	if err := wg.Wait(); err != nil {
 		return err
 	}
 

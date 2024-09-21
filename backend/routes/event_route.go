@@ -9,5 +9,5 @@ func NewEventRoute(router *echo.Group) {
 	group := router.Group("/events")
 
 	controller := controllers.GetEventController()
-	group.GET("/", controller.GetAllEvents)
+	group.GET("", controller.GetAllEvents)
 }
