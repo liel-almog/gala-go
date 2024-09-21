@@ -6,10 +6,13 @@ import (
 
 	"github.com/liel-almog/gala-go/backend/models"
 	"github.com/liel-almog/gala-go/backend/repositories"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 type EventService interface {
 	GetAll(ctx context.Context) ([]models.Event, error)
+	GetById(ctx context.Context, id bson.ObjectID) (*models.Event, error)
+	Create(ctx context.Context, event *models.Event) error
 }
 
 type eventServiceImpl struct {
@@ -37,4 +40,12 @@ func GetEventService() EventService {
 
 func (s *eventServiceImpl) GetAll(ctx context.Context) ([]models.Event, error) {
 	return s.eventRepository.FindAll(ctx)
+}
+
+func (s *eventServiceImpl) GetById(ctx context.Context, id bson.ObjectID) (*models.Event, error) {
+	return s.eventRepository.FindById(ctx, id)
+}
+
+func (s *eventServiceImpl) Create(ctx context.Context, event *models.Event) error {
+	return s.eventRepository.Create(ctx, event)
 }

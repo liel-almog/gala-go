@@ -10,4 +10,6 @@ func NewEventRoute(router *echo.Group) {
 
 	controller := controllers.GetEventController()
 	group.GET("", controller.GetAllEvents)
+	group.GET("/:id", controller.GetEventById)
+	group.POST("", controller.CreateEvent)
 }
