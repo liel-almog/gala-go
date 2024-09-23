@@ -14,6 +14,11 @@ type EventController interface {
 	GetAllEvents(c echo.Context) error
 	GetEventById(c echo.Context) error
 	CreateEvent(c echo.Context) error
+	DeleteEvent(c echo.Context) error
+	RemoveGuestFromAllEvents(c echo.Context) error
+	RemoveGuestFromEventById(c echo.Context) error
+	GetGuestsByEventId(c echo.Context) error
+	GetAllAvilableEvents(c echo.Context) error
 }
 
 type eventControllerImpl struct {
@@ -93,5 +98,25 @@ func (c *eventControllerImpl) CreateEvent(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(201, echo.Map{})
+	return ctx.NoContent(201)
+}
+
+func (c *eventControllerImpl) DeleteEvent(ctx echo.Context) error {
+	return nil
+}
+
+func (c *eventControllerImpl) RemoveGuestFromAllEvents(ctx echo.Context) error {
+	return nil
+}
+
+func (c *eventControllerImpl) RemoveGuestFromEventById(ctx echo.Context) error {
+	return nil
+}
+
+func (c *eventControllerImpl) GetGuestsByEventId(ctx echo.Context) error {
+	return nil
+}
+
+func (c *eventControllerImpl) GetAllAvilableEvents(ctx echo.Context) error {
+	return nil
 }

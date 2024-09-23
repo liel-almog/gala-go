@@ -12,6 +12,7 @@ import (
 type MongoClient struct {
 	Client    *mongo.Client
 	EventColl *mongo.Collection
+	GuestColl *mongo.Collection
 }
 
 var (
@@ -40,10 +41,12 @@ func newDB() {
 		}
 
 		eventColl := client.Database(dbName).Collection("events")
+		guestColl := client.Database(dbName).Collection("guests")
 
 		db = &MongoClient{
 			Client:    client,
 			EventColl: eventColl,
+			GuestColl: guestColl,
 		}
 	})
 }

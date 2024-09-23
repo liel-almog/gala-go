@@ -67,9 +67,5 @@ func (r *eventRepositoryImpl) FindById(ctx context.Context, id bson.ObjectID) (*
 
 func (r *eventRepositoryImpl) Create(ctx context.Context, event *models.Event) error {
 	_, err := r.db.EventColl.InsertOne(ctx, event)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
