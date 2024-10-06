@@ -16,6 +16,7 @@ type CustomRequest struct {
 // We are using the extended reference pattern
 // https://www.mongodb.com/blog/post/building-with-patterns-the-extended-reference-pattern
 type Guest struct {
+	Id             bson.ObjectID   `json:"_id,omitempty" bson:"_id,omitempty"`
 	Name           string          `json:"name" bson:"name" validate:"min=3,max=50"`
 	IsVip          bool            `json:"isVip" bson:"isVip"`
 	Age            int8            `json:"age" bson:"age" validate:"gte=18,lte=120"`

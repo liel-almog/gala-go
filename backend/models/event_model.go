@@ -13,7 +13,7 @@ type ExtendedGuest struct {
 // We are using the extended reference pattern
 // https://www.mongodb.com/blog/post/building-with-patterns-the-extended-reference-pattern
 type Event struct {
-	// Id         bson.ObjectID   `json:"_id" bson:"_id"`
+	Id         bson.ObjectID   `json:"_id,omitempty" bson:"_id,omitempty"`
 	Name       string          `json:"name" bson:"name" validate:"min=3,max=50"`
 	DressCode  string          `json:"dressCode" bson:"dressCode"`
 	Location   string          `json:"location" bson:"location"`
@@ -25,7 +25,6 @@ type Event struct {
 
 func NewEvent() *Event {
 	return &Event{
-		// Id:         bson.NewObjectID(),
 		Guests:     []ExtendedGuest{},
 		Organizers: []bson.ObjectID{},
 	}
